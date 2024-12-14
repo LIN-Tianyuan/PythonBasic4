@@ -10,11 +10,11 @@ print('DANCE' in leisure)   # False
 print(leisure.index('swim'))    # 0
 # Accéder aux éléments d'une liste
 print(leisure[1])   # dance
-# Modifier la valeur d'un élément de lite
+# Modifier la valeur d'un élément de liste
 leisure[0] = 'ski'
 print(leisure)  # ['ski', 'dance', 'sing']
-leisure.append('game')
 # Ajouter un élément à une liste
+leisure.append('game')
 print(leisure)  # ['ski', 'dance', 'sing', 'game']
 # Insérer un élément ailleurs qu'à la fin
 leisure.insert(3, 'climb')
@@ -30,7 +30,7 @@ leisure.clear()
 print(leisure)
 # Concaténer deux listes
 month = ['Janvier', 'Février', 'Mars']
-season = ['Automone', 'Hiver', 'Printemps', 'Eté']
+season = ['Automne', 'Hiver', 'Printemps', 'Eté']
 various_times = month + season
 print(various_times)
 # Étendre une liste

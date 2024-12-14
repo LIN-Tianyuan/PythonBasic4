@@ -10,6 +10,7 @@ bag_of_balls = ['rose', 'bleu', 'vert',
                 'jaune', 'rouge', 'rose', 'rouge',
                 'vert', 'jaune']
 balls_outputs = []
+"""
 remaining_draws = 5
 for x in range(5):
     if remaining_draws > 0:
@@ -30,5 +31,21 @@ print(balls_outputs)
 print()
 print("La nouvelle collection contient: ")
 print(my_collection)
+"""
+remaining_draws = 0
+while True:
+    a = random.randint(0, len(bag_of_balls) - 1)
+    b = bag_of_balls[a]
+    balls_outputs.append(b)
+    print(b)
+    remaining_draws = remaining_draws + 1
+    if remaining_draws == 5:
+        print("Vous avez échoué.")
+        break
+    elif b == 'vert':
+        print("Vous avez réussi.")
+        my_collection.append(b)
+        print(my_collection)
+        break
 
 
