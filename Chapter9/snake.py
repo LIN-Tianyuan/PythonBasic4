@@ -3,6 +3,7 @@ import sys
 import random
 
 pygame.init()
+
 window_x = 720
 window_y = 480
 green = (0, 255, 0)
@@ -24,7 +25,15 @@ snake_body = [[100, 50],
               [90, 50],
               [80, 50],
               [70, 50]]
-fruit_position = [random.randint(0, window_x), random.randint(0, window_y)]
+fruit_position = [random.randint(0, window_x // 10) * 10, random.randint(0, window_y // 10) * 10]
+
+score = 0
+def show_score():
+    score_font = pygame.font.SysFont('Arial', 20)
+    score_surface = score_font.render('Score: ' + str(score), True, (255, 255, 255))
+    score_rect = score_surface.get_rect()
+    game.blit(score_surface, score_rect)
+
 
 while True:
     for event in pygame.event.get():
@@ -60,8 +69,12 @@ while True:
     if direction == 'DOWN':
         snake_position[1] = snake_position[1] + 10
 
+
     snake_body.insert(0, list(snake_position))
     snake_body.pop(4)
+
+    if snake_position[0] == fruit_position[0] and snake_position[1] == fruit_position[1]:
+        score = score + 1
 
     game.fill(black)
 
@@ -69,5 +82,6 @@ while True:
         pygame.draw.rect(game, green, pygame.Rect(position[0], position[1], 10, 10))
     pygame.draw.rect(game, red, pygame.Rect(fruit_position[0], fruit_position[1], 10, 10))
 
+    show_score()
     pygame.display.flip()
     fps.tick(speed)
