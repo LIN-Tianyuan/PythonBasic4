@@ -1,6 +1,7 @@
 import pygame
 import sys
 import random
+import time
 
 pygame.init()
 
@@ -25,7 +26,7 @@ snake_body = [[100, 50],
               [90, 50],
               [80, 50],
               [70, 50]]
-fruit_position = [random.randint(0, window_x // 10) * 10, random.randint(0, window_y // 10) * 10]
+fruit_position = [random.randint(0, (window_x - 10) // 10) * 10, random.randint(0, (window_y-10) // 10) * 10]
 
 score = 0
 def show_score():
@@ -33,6 +34,17 @@ def show_score():
     score_surface = score_font.render('Score: ' + str(score), True, (255, 255, 255))
     score_rect = score_surface.get_rect()
     game.blit(score_surface, score_rect)
+
+def game_over():
+    game_over_font = pygame.font.SysFont("Arial", 50)
+    game_over_surface = game_over_font.render('Game over, Your score is ' + str(score), True, (255, 182, 193))
+    game_over_rect = game_over_surface.get_rect()
+    game_over_rect.center = (360, 240)
+    game.blit(game_over_surface, game_over_rect)
+    pygame.display.flip()
+    time.sleep(2)
+    pygame.quit()
+    sys.exit()
 
 
 while True:
@@ -71,12 +83,23 @@ while True:
 
 
     snake_body.insert(0, list(snake_position))
-    snake_body.pop(4)
 
     if snake_position[0] == fruit_position[0] and snake_position[1] == fruit_position[1]:
-        score = score + 1
+        score = score + 10
+        fruit_position = [random.randint(0, (window_x - 10) // 10) * 10, random.randint(0, (window_y - 10) // 10) * 10]
+    else:
+        snake_body.pop()
 
-    game.fill(black)
+    game.fill((138, 43, 226))
+
+    if snake_position[0] > window_x or snake_position[1] > window_y:
+        game_over()
+    elif snake_position[0] < 0 or snake_position[1] < 0:
+        game_over()
+
+    for block in snake_body[1:]:
+        if block[0] == snake_position[0] and block[1] == snake_position[1]:
+            game_over()
 
     for position in snake_body:
         pygame.draw.rect(game, green, pygame.Rect(position[0], position[1], 10, 10))
